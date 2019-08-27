@@ -1,6 +1,10 @@
 /**
  * dependencias:
  * yarn add react-icons
+ *
+ *
+ * REACTOTRON
+ * yarn add reactotron-react-js reactotron-redux
  */
 
 import React from 'react';
