@@ -6,10 +6,11 @@ import {
   MdAddCircleOutline,
   MdDelete,
 } from 'react-icons/md';
+import { formatPrice } from '../../util/format';
 import * as CartActions from '../../store/modules/cart/actions';
 import { Container, ProductTable, Total } from './styles';
 
-function Cart({ cart, removeFromCart }) {
+function Cart({ cart, totalgeral, removeFromCart, updateAmount }) {
   return (
     <Container>
       <ProductTable>
@@ -34,17 +35,23 @@ function Cart({ cart, removeFromCart }) {
               </td>
               <td>
                 <div>
-                  <button type="button">
+                  <button
+                    type="button"
+                    onClick={() => updateAmount(product.id, product.amount - 1)}
+                  >
                     <MdRemoveCircleOutline size={20} color="#7159c1" />
                   </button>
                   <input type="number" readOnly value={product.amount} />
-                  <button type="button">
+                  <button
+                    type="button"
+                    onClick={() => updateAmount(product.id, product.amount + 1)}
+                  >
                     <MdAddCircleOutline size={20} color="#7159c1" />
                   </button>
                 </div>
               </td>
               <td>
-                <strong>R$999,99</strong>
+                <strong>{product.subtotal}</strong>
               </td>
               <td>
                 <button
@@ -64,7 +71,7 @@ function Cart({ cart, removeFromCart }) {
 
         <Total>
           <span>TOTAL</span>
-          <strong>R$999,99</strong>
+          <strong>{totalgeral}</strong>
         </Total>
       </footer>
     </Container>
@@ -72,7 +79,15 @@ function Cart({ cart, removeFromCart }) {
 }
 
 const mapStateToProps = state => ({
-  cart: state.cart,
+  cart: state.cart.map(product => ({
+    ...product,
+    subtotal: formatPrice(product.price * product.amount),
+  })),
+  totalgeral: formatPrice(
+    state.cart.reduce((total, product) => {
+      return total + product.price * product.amount;
+    }, 0)
+  ),
 });
 
 const mapDispatchToProps = dispatch =>
