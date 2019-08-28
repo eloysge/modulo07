@@ -10,7 +10,8 @@ import { formatPrice } from '../../util/format';
 import * as CartActions from '../../store/modules/cart/actions';
 import { Container, ProductTable, Total } from './styles';
 
-function Cart({ cart, totalgeral, removeFromCart, updateAmount }) {
+// eslint-disable-next-line react/prop-types
+function Cart({ cart, totalgeral, removeFromCart, updateAmountRequest }) {
   return (
     <Container>
       <ProductTable>
@@ -37,14 +38,18 @@ function Cart({ cart, totalgeral, removeFromCart, updateAmount }) {
                 <div>
                   <button
                     type="button"
-                    onClick={() => updateAmount(product.id, product.amount - 1)}
+                    onClick={() =>
+                      updateAmountRequest(product.id, product.amount - 1)
+                    }
                   >
                     <MdRemoveCircleOutline size={20} color="#7159c1" />
                   </button>
                   <input type="number" readOnly value={product.amount} />
                   <button
                     type="button"
-                    onClick={() => updateAmount(product.id, product.amount + 1)}
+                    onClick={() =>
+                      updateAmountRequest(product.id, product.amount + 1)
+                    }
                   >
                     <MdAddCircleOutline size={20} color="#7159c1" />
                   </button>

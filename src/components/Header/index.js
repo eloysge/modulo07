@@ -26,7 +26,10 @@ function Header({ cartSize }) {
           <strong>Meu carrinho</strong>
           <span>{cartSize} itens</span>
         </div>
-        <MdShoppingBasket size={36} color="#FFF" />
+        <MdShoppingBasket
+          size={36}
+          color={cartSize === 0 ? '#444' : '#b2ff28'}
+        />
       </Cart>
     </Container>
   );
