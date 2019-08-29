@@ -1,6 +1,6 @@
 import { all } from 'redux-saga/effects';
-import addCart from './cart/sagas';
+import sagaCart from './cart/sagas';
 
 export default function* rootSaga() {
-  return yield all([addCart]);
+  return yield all([sagaCart]);
 }

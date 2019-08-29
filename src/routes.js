@@ -5,8 +5,8 @@
  */
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Home from '../src/pages/Home';
-import Cart from '../src/pages/Cart';
+import Home from './pages/Home';
+import Cart from './pages/Cart';
 
 export default function Routers() {
   return (

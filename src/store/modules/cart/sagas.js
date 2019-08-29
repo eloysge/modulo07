@@ -9,8 +9,18 @@
 import { call, select, put, all, takeLatest } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import api from '../../../services/api';
+import history from '../../../services/history';
 import { formatPrice } from '../../../util/format';
 import { addToCartSuccess, updateAmountSuccess } from './actions';
+
+function checkStock(productStock, amount) {
+  console.tron.log(productStock, amount);
+  if (amount > productStock.amount) {
+    toast.error('Quant. solicitada maior que estoque atual');
+    return false;
+  }
+  return true;
+}
 
 function* addToCart({ id }) {
   const productExists = yield select(state =>
@@ -18,14 +28,10 @@ function* addToCart({ id }) {
   );
 
   const stock = yield call(api.get, `/stock/${id}`);
-  const stockAmount = stock.data.amount;
   const currentAmount = productExists ? productExists.amount : 0;
   const amount = currentAmount + 1;
 
-  if (amount > stockAmount) {
-    toast.error('Quant. solicitada maior que estoque atual');
-    return;
-  }
+  if (!checkStock(stock.data, amount)) return;
 
   if (productExists) {
     yield put(updateAmountSuccess(id, amount));
@@ -37,6 +43,7 @@ function* addToCart({ id }) {
       priceFormatted: formatPrice(response.data.price),
     };
     yield put(addToCartSuccess(data));
+    history.push('/cart'); // após adicionar, muda rota para carrinho.
   }
 }
 
@@ -44,12 +51,8 @@ function* updateAmount({ id, amount }) {
   if (amount <= 0) return;
 
   const stock = yield call(api.get, `/stock/${id}`);
-  const stockAmount = stock.data.amount;
 
-  if (amount > stockAmount) {
-    toast.error('Quant. solicitada maior que estoque atual');
-    return;
-  }
+  if (!checkStock(stock.data, amount)) return;
 
   yield put(updateAmountSuccess(id, amount));
 }
