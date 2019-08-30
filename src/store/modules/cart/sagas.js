@@ -43,8 +43,8 @@ function* addToCart({ id }) {
       priceFormatted: formatPrice(response.data.price),
     };
     yield put(addToCartSuccess(data));
-    history.push('/cart'); // após adicionar, muda rota para carrinho.
   }
+  history.push('/cart'); // após adicionar, muda rota para carrinho.
 }
 
 function* updateAmount({ id, amount }) {

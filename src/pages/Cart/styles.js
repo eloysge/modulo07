@@ -1,10 +1,19 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { darken } from 'polished';
 
 export const Container = styled.div`
   padding: 30px;
   background: #fff;
   border-radius: 4px;
+
+  p {
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
 
   footer {
     margin-top: 30px;
@@ -93,4 +102,9 @@ export const Total = styled.div`
     font-size: 28px;
     margin-left: 5px;
   }
+`;
+
+export const ButtonLink = styled(Link)`
+  display: flex;
+  text-decoration: none;
 `;
