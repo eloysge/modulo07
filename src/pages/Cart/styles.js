@@ -7,12 +7,11 @@ export const Container = styled.div`
   background: #fff;
   border-radius: 4px;
 
-  p {
-    display: flex;
-    margin-top: 20px;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: bold;
+  .emptyimg {
+    margin-top: 10px;
+    border-radius: 4px;
+    position: relative;
+    left: 50%;
   }
 
   footer {
